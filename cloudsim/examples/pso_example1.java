@@ -50,7 +50,7 @@ import org.cloudbus.cloudsim.util.WorkloadFileReader;
 import ut.Processors;
 
 @SuppressWarnings("unused")
-public class PSO_New_Nov_9 {
+public class pso_example1 {
 
 	static FileOutputStream out;
 	static PrintStream ps;
@@ -66,16 +66,12 @@ public class PSO_New_Nov_9 {
 
 			System.exit(0);
 		}
+		
 		ps = new PrintStream(out);
 		
+		vmlist = new ArrayList<Vm>();
+		initSimulation();
 		
-		//for (int i = 0; i < 100; i++) {
-			vmlist = new ArrayList<Vm>();
-			initSimulation();
-			
-		//	System.out.println(i+1);
-		//}
-
 		ps.close();
 	}
 
@@ -100,7 +96,7 @@ public class PSO_New_Nov_9 {
 
 			List<Cloudlet> cloudletList = createCloudLets();
 
-			//broker.UsePSO();
+			broker.UsePSO();
 
 			for (Cloudlet cloudlet : cloudletList) {
 				cloudlet.setUserId(brokerId);
@@ -200,7 +196,7 @@ public class PSO_New_Nov_9 {
 	private static void addVMs(int VMNr, int brokerId, boolean timeSharedScheduling, int mips) {
 
 		mips = Processors.Intel.Pentium_4_Extreme_Edition.mips;
-		//int mips = Processors.AMD.Athlon_FX_57.mips;
+		//mips = Processors.AMD.Athlon_FX_57.mips;
 		long size = 10000;
 		int ram = 512;
 		long bw = 1000;

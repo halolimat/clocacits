@@ -252,7 +252,9 @@ public class WorkloadFileReader implements WorkloadModel {
 	}
 
 	// ------------------- PRIVATE METHODS -------------------
-
+	//PSO Edit Here
+	//create cloudlet here
+	
 	/**
 	 * Creates a Gridlet with the given information and adds to the list
 	 * 
@@ -272,9 +274,7 @@ public class WorkloadFileReader implements WorkloadModel {
 	private void createJob(final int id, final long submitTime, final int runTime, 
 			final int numProc, final int reqRunTime, final int userID, final int groupID) {
 		
-		// create the cloudlet
-		
-		//length (exection time of a job) = run time in second * how many instruction executed per second
+		// length (execution time of a job) = run time in second * how many instruction executed per second
 		// for example 1000 seconds * 1 per second = 1000 instructions the length of the job
 		final int len = runTime * rating;
 		
@@ -283,7 +283,6 @@ public class WorkloadFileReader implements WorkloadModel {
 		final Cloudlet wgl = new Cloudlet(id, len, numProc,	0, 0, utilizationModel, 
 				utilizationModel, utilizationModel);
 		
-		//UT_Edit
 		wgl.setUserId(userID);
 		
 		jobs.add(wgl);
@@ -411,6 +410,10 @@ public class WorkloadFileReader implements WorkloadModel {
 		}
 	}
 
+	//PSO Edit here
+	// to read only small number of the whole workload, this code should be changed; 
+	// also when using different workload. Comment in case we want to simulate the whole workload.
+	
 	/**
 	 * Reads a text file one line at the time
 	 * 
@@ -428,16 +431,13 @@ public class WorkloadFileReader implements WorkloadModel {
 			// read one line at a time
 			int line = 1;
 			
-			//UT_Edit --------------------(to read only small number of the whole workload)
-			//this code should be changed; when using different workload, or
-			//deleted in case we want to simulate the whole workload
-			
 			int numberOfCloudLets = 100;
+			
 			// x: number of lines where each line is a cloudlet,
 			// 30 more were added because HPC2N-2002-2.1-cln.swf has 30 comment lines
 			int x = numberOfCloudLets + 30;
 			
-			//number of cloudlets + (30- the number of comment lines in the worklaod file) 
+			//number of cloudlets + (30- the number of commented lines in the workload file) 
 			while (reader.ready() && line <= x) {
 				parseValue(reader.readLine(), line);
 				line++;

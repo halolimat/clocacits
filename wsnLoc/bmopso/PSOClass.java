@@ -40,9 +40,7 @@ public class PSOClass {
 	private CrowdingDistanceClass crowdingDistance;
 	
 	private BinaryMutation binaryMutation;
-	
-	private SAInertiaWeight inertiaWeight;
-	
+		
 	//constants
 	double c1, c2;
 	int r1,r2, minV, maxV;
@@ -57,7 +55,7 @@ public class PSOClass {
 		equalityComparator = new EqualityComparator();
 		crowdingDistance = new CrowdingDistanceClass();
 		binaryMutation = new BinaryMutation();
-		inertiaWeight = new SAInertiaWeight();
+		
 		ran = new Random();
 		
 		particlesFitness = new ArrayList<double[]>();
@@ -155,11 +153,6 @@ public class PSOClass {
 				particleFitness[iter] = currParticle.fitness.energyConsumption / currParticle.fitness.time;
 				particlesFitness.set(l, particleFitness);
 			}
-			
-			//System.out.println(iter);
-			if(iter%20 == 0){
-				System.out.print("\t"+iter);
-			}
 		}
 		
 		System.out.println();
@@ -244,8 +237,7 @@ public class PSOClass {
 		
 		// --------------------------------------------------------------------		
 		
-		// calculate InertiaValue
-		double w = inertiaWeight.InertiaValue(currParticle, particleNumber, iter, particlesFitness.get(particleNumber), numberOfIterations);
+		double w = 0.1;
 		
 		ArrayList<double[]> newVelocitiesMatrix = new ArrayList<double[]>();
 		
@@ -432,16 +424,6 @@ public class PSOClass {
 				}
 			}
 		}
-
-		// Insert the solution into the archive
-		//leaders.add(solution);
-
-		/*
-		if (leaders.size() > numberOfParticles) { // The archive is full Do something
-			// distance_.crowdingDistanceAssignment(leaders, objectives_);
-			// remove(indexWorst(crowdingDistance_));
-		}
-		 */
 		
 		return true;
 	}

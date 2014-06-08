@@ -51,7 +51,7 @@ import ut.Processors;
  * A simple example showing how to create a datacenter with one host and run one
  * cloudlet on it.
  */
-public class PSO_Simulation_Example {
+public class pso_example2 {
 
 	static FileOutputStream out;
 	static PrintStream ps;
@@ -182,8 +182,7 @@ public class PSO_Simulation_Example {
 		// 2. create hosts, where Every Machine contains one or more PEs or
 		// CPUs/Cores
 
-		// ((( Host 1
-		// )))--------------------------------------------------------------------------------------------------------
+		// ((( Host 1 )))---------------------------
 		List<Pe> Host_1_peList = new ArrayList<Pe>();
 
 		// get the mips value of the selected processor
@@ -211,11 +210,9 @@ public class PSO_Simulation_Example {
 				//Host_1_peList, new VmSchedulerTimeShared(Host_1_peList)));
 				Host_1_peList, new VmSchedulerTimeSharedOverSubscription(Host_1_peList)));
 
-		// ((( \Host 1
-		// )))--------------------------------------------------------------------------------------------------------
+		// ((( /Host 1 )))---------------------------
 
-		// ((( Host 2
-		// )))--------------------------------------------------------------------------------------------------------
+		// ((( Host 2 )))---------------------------
 
 		List<Pe> Host_2_peList = new ArrayList<Pe>();
 
@@ -244,8 +241,7 @@ public class PSO_Simulation_Example {
 				//Host_2_peList, new VmSchedulerTimeShared(Host_2_peList)));
 				Host_2_peList, new VmSchedulerTimeSharedOverSubscription(Host_2_peList)));
 
-		// ((( \Host 2
-		// )))--------------------------------------------------------------------------------------------------------
+		// ((( /Host 2 )))---------------------------
 
 		// 5. Create a DatacenterCharacteristics object that stores the
 		// properties of a data center: architecture, OS, list of
@@ -328,15 +324,13 @@ public class PSO_Simulation_Example {
 			int VM_ID = vmlist.size();
 			
 			if (timeSharedScheduling) {
-				// create VM that uses time shared scheduling to schedule
-				// Cloudlets
+				// create VM that uses time shared scheduling to schedule Cloudlets
 				vm = new Vm(VM_ID, brokerId, mips, pesNumber, ram, bw, size, vmm,
 						new CloudletSchedulerTimeShared());
 			}
 
 			else {
-				// create VM that uses space shared scheduling to schedule
-				// Cloudlets
+				// create VM that uses space shared scheduling to schedule Cloudlets
 				vm = new Vm(VM_ID, brokerId, mips, pesNumber, ram, bw, size, vmm,
 						new CloudletSchedulerSpaceShared());
 			}

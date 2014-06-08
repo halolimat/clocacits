@@ -87,32 +87,22 @@ public class Floood {
 							}
 							
 							notDone = true;
-							
-							//System.out.print(nodesToRangeList.get(i).sender.id + " \t" + nodesReach.get(j).sensorNode.id);
-							//System.out.println("\t"+nodesToRangeList.get(i).range);
 						}
 						
 						//if the node was able to contact 3 localized nodes it will be localized
 						if(nodesReach.get(j).reachedSensors.size() >= 3 && !nodesReach.get(j).localized){
-							//System.out.println("id> "+nodesReach.get(j).sensorNode.id);
 							nodesReach.get(j).localized = true;
 							numberOfNodesLocalized++;
 						}
-						
-						//System.out.println("Number of transmissions = "+);
 					}
 					
 					sumRanges += nodesToRangeList.get(i).range;
 					sumPowerConsumption += zigBeeObj.calculatePowerConsumption(nodesToRangeList.get(i).range);
-					
-					//System.out.print(nodesToRangeList.get(i).range + " ");
 				}
 				
 				time++;
 			}
 		}
-		
-		//System.out.println();
 		
 		FloodResult result = new FloodResult();
 		result.localizedNodesNumber = numberOfNodesLocalized;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import wsnLoc.ext.*;
 
-public class psoPowerLevels {
+public class MainClass {
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		

@@ -34,14 +34,9 @@ public class PSOClass {
 	private CrowdingDistanceClass crowdingDistance;
 	
 	private BoundaryMutation uniformMutation;
-	
-	//private SAInertiaWeight inertiaWeight;
-	
+		
 	//constants
 	double r1,r2;
-	
-	
-	//ArrayList<double[]> particlesFitness;
 	
 	public ArrayList<Particle> run(ArrayList<Node> nodesList) {
 
@@ -311,7 +306,7 @@ public class PSOClass {
 
 		int flag = 0;
 		int i = 0;
-		Particle aux; // Store an solution temporally
+		Particle aux; // Store a solution temporally
 
 		while (i < leaders.size()) {
 

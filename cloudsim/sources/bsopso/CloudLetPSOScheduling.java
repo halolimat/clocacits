@@ -6,9 +6,9 @@ package cloudsim.sources.bsopso;
  * Description:  CloudSim (Cloud Simulation) Toolkit for Modeling and Simulation
  *               of Clouds
  *               
- * Licence:      GPL - http://www.gnu.org/copyleft/gpl.html
+ * License:      GPL - http://www.gnu.org/copyleft/gpl.html
  * 
- * implemnted by: Hussein S. Al-Olimat
+ * implemented by: Hussein S. Al-Olimat
  * email: hussein.alolimat@msn.com
  * 
  * class description: this class will implement the binary version of PSO to reschedule cloudlets
@@ -90,7 +90,6 @@ public class CloudLetPSOScheduling {
 				
 				Cloudlet cloudlet = cloudletList.get(j);
 				
-				//arr[j] = (double) cloudlet.getCloudletLength() / vm.getMips();
 				arr[j] = (double) cloudlet.getCloudletLength() / vm.getHost().getTotalAllocatedMipsForVm(vm);
 			}
 
@@ -100,7 +99,7 @@ public class CloudLetPSOScheduling {
 
 		swarm = new Particle[numberOfParticles];
 
-		ArrayList<int[]> bestGlobalPositions = new ArrayList<int[]>();// the best positons found
+		ArrayList<int[]> bestGlobalPositions = new ArrayList<int[]>();// the best positions found
 		
 		double bestGlobalFitness = Double.MAX_VALUE; // smaller values better
 
@@ -140,7 +139,7 @@ public class CloudLetPSOScheduling {
 			}
 
 			
-			// to assign un-assigned tasks
+			// to assign unassigned tasks
 			ArrayList<int[]> newPositionsMatrix = checkResourceAssignmentForNonAssignedTasks(initPositions, assignedTasksArray);
 
 			double fitness = ObjectiveFunction(runTime, newPositionsMatrix);
@@ -194,7 +193,7 @@ public class CloudLetPSOScheduling {
         int minV = 0;
         int maxV = 1;
 
-        //to keep an array of the average fitnesses per particle
+        //to keep an array of the average fitness per particle
         ArrayList<double[]> averageFitnesses = new ArrayList<double[]>();
         
         //fill the averageFitnesses with empty arrays
@@ -234,7 +233,7 @@ public class CloudLetPSOScheduling {
                     	
                         if (assignedTasksArrayInVelocityMatrix[j] == 0) {
     						
-                        	//velocity vecotr
+                        	//velocity vector
                         	newVelocities[j] =  (w * vmVelocities[j+1] + c1 * r1 * (vmBestPositions[j] - vmPostitons[j]) + c2 * r2 * (vmGlobalbestPositions[j] - vmPostitons[j]));
                         	
                         	if (newVelocities[j] < minV){
@@ -302,7 +301,7 @@ public class CloudLetPSOScheduling {
                     newPositionsMatrix.add(newPosition);
         		}
         		
-        		//wil check for non assigned tasks
+        		//will check for non assigned tasks
         		newPositionsMatrix = checkResourceAssignmentForNonAssignedTasks(newPositionsMatrix, assignedTasksArrayInPositionsMatrix);
         		newPositionsMatrix = ReBalancePSO(newPositionsMatrix, runTime);
         		currParticle.positionsMatrix = newPositionsMatrix;
@@ -320,7 +319,7 @@ public class CloudLetPSOScheduling {
                     currParticle.bestFitness = newFitness;
                 }
 
-        		//if the new fitness is better than all soultions found by all particles
+        		//if the new fitness is better than all solutions found by all particles
         		//-> set the new fitness as the global fitness
                 if (newFitness < bestGlobalFitness)
                 {
@@ -328,7 +327,7 @@ public class CloudLetPSOScheduling {
                     bestGlobalFitness = newFitness;
                 }
                 
-                //to add the new fitness to the average fitnesses array
+                //to add the new fitness to the average fitness array
                 double[] fitnessArrayInAvgFitnesses = averageFitnesses.get(l);
                 fitnessArrayInAvgFitnesses[iter] = newFitness;
                 //Added .. worse solutions
@@ -339,6 +338,7 @@ public class CloudLetPSOScheduling {
        return returnVM2CloudLetArray(bestGlobalPositions);		
 	}
 	
+	// This function will re-balance the solution found by PSO for better solutions
 	private ArrayList<int[]> ReBalancePSO(ArrayList<int[]> newPositionsMatrix, ArrayList<double[]> runTime) {
 		
 		boolean done = false;
@@ -375,38 +375,10 @@ public class CloudLetPSOScheduling {
 				}
 			}
 			
-			//System.out.println("heavestVMLoad = "+heavestVMLoad);
-			//System.out.println("lightestVMLoad = "+lightestVMLoad);
-			
 			int[] HeavestPOS = newPositionsMatrix.get(heavestVMLoad);
 			
-			//for(int i = 0 ; i < HeavestPOS.length ; i++){
-				//System.out.print(i+1+"\t");
-			//}
-			
-			//System.out.println();
-			
-			//for(int i = 0 ; i < HeavestPOS.length ; i++){
-			//	System.out.print(HeavestPOS[i]+"\t");
-			//}
-			
-			//System.out.println();
-			
 			int[] LightestPOS = newPositionsMatrix.get(lightestVMLoad);
-			
-			//for(int i = 0 ; i < LightestPOS.length ; i++){
-			//	System.out.print(LightestPOS[i]+"\t");
-			//}
-			
-			//System.out.println();
-			
-			//System.out.println("BEFORE:");
-			//for (int i = 0; i < m; i++) {
-			//	System.out.println("sum[" + i+"] = "+sum[i]);
-			//}
-			
-			//-------------------------------------------------
-			
+						
 			for(int i = 0 ; i < HeavestPOS.length ; i++){
 				int cloudletNumberOnHeavest = 0;
 				
@@ -429,12 +401,7 @@ public class CloudLetPSOScheduling {
 				}
 			}
 			
-			//-------------------------------------------------
-			
-			//System.out.println("\nAFTER:");
-			//for (int i = 0; i < m; i++) {
-			//	System.out.println("sum[" + i+"] = "+sum[i]);
-			//}
+			//----
 			
 			if(counter == 3){
 				done = true;
@@ -452,9 +419,9 @@ public class CloudLetPSOScheduling {
 	 * 
 	 * @param particleNumber: The particle's number; one of the possible solutions
 	 * @param iterationNumber: The move number when searching the space
-	 * @param averageFitnesses: The average of all fitnesses found so far during the first to current iteration number
+	 * @param averageFitnesses: The average of all fitness found so far during the first to current iteration number
 	 * 
-	 * @return double value of the ineria weight
+	 * @return double value of the inertia weight
 	 */	
 	private double InertiaValue(int particleNumber, int iterationNumber, ArrayList<double[]> averageFitnesses){
 		
@@ -566,9 +533,9 @@ public class CloudLetPSOScheduling {
 	}
 	
 	/**
-	 * will return an integer array of the vm to cloudlet maping
+	 * will return an integer array of the vm to cloudlet mapping
 	 * 
-	 * @param bestGlobalPositions: best found positions array based on the best fitnesss found/ minimum makespan
+	 * @param bestGlobalPositions: best found positions array based on the best fitness found/ minimum makespan
 	 * 
 	 * @return array of integers
 	 */	

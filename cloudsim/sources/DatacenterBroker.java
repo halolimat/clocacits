@@ -72,6 +72,7 @@ public class DatacenterBroker extends SimEntity {
 	/** The datacenter characteristics list. */
 	protected Map<Integer, DatacenterCharacteristics> datacenterCharacteristicsList;
 	
+	//PSO Edit Here
 	protected boolean usePSO;
 
 	/**
@@ -97,6 +98,7 @@ public class DatacenterBroker extends SimEntity {
 		setVmsAcks(0);
 		setVmsDestroyed(0);
 		
+		//PSO Edit Here	
 		usePSO = false;
 
 		setDatacenterIdsList(new LinkedList<Integer>());
@@ -106,7 +108,7 @@ public class DatacenterBroker extends SimEntity {
 	}
 	
 	/**
-	 * UT_Edit
+	 * PSO Edit Here
 	 * 
 	 * Implements PSO to re arrange the cloudLets and bind them to specific VMs
 	 * 
@@ -689,6 +691,7 @@ public class DatacenterBroker extends SimEntity {
 		this.datacenterRequestedIdsList = datacenterRequestedIdsList;
 	}
 	
+	//PSO Edit Here
 	public void UsePSO(){
 		usePSO = true;
 	}

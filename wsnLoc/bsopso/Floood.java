@@ -26,7 +26,7 @@ public class Floood {
 
 			else {
 				// to start flooding from anchors
-					a.localized = true;
+				a.localized = true;
 			}
 
 			a.broadcasted = false;
@@ -44,8 +44,8 @@ public class Floood {
 		int min = 0;
 		int max = 0;
 		
-		// to make sure that all localized sensors broadcasted, to contribute in
-		// localizing other nodes
+		// to make sure that all localized sensors broadcasted,
+		// to contribute in localizing other nodes
 		while (notDone == true) {
 
 			notDone = false;
@@ -74,8 +74,8 @@ public class Floood {
 						double distance = Math.sqrt(Math.pow(xDiff, 2)
 								+ Math.pow(yDiff, 2));
 
-						// if distance is less or equal the distance chosen by
-						// PSO then the receiver will receive
+						// if distance is less or equal the distance chosen by PSO,
+						// then the receiver will receive
 						if (distance <= nodesToRangeList.get(i).range && !nodesReach.get(j).localized) {
 							
 							if(!nodesReach.get(j).reachedSensors.contains(sender)){
@@ -83,19 +83,13 @@ public class Floood {
 							}
 							
 							notDone = true;
-							
-							//System.out.print(nodesToRangeList.get(i).sender.id + " \t" + nodesReach.get(j).sensorNode.id);
-							//System.out.println("\t"+nodesToRangeList.get(i).range);
 						}
 						
 						//if the node was able to contact 3 localized nodes it will be localized
 						if(nodesReach.get(j).reachedSensors.size() >= 3 && !nodesReach.get(j).localized){
-							//System.out.println("id> "+nodesReach.get(j).sensorNode.id);
 							nodesReach.get(j).localized = true;
 							numberOfNodesLocalized++;
 						}
-						
-						//System.out.println("Number of transmissions = "+);
 					}
 					
 					if(nodesToRangeList.get(i).range == ZigBee_powerConsumption.MinRange)

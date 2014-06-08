@@ -1,8 +1,6 @@
-package wsnLoc.bmopso;
+package wsnLoc.ext;
 
 import java.util.ArrayList;
-
-import wsnLoc.ext.*;
 
 public class SensorToSensor {
 	public Node sender;

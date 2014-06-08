@@ -109,22 +109,10 @@ public class PSOClass {
 			
 			// does current Particle have global best position/solution?
 			if(swarm[l].fitness.localizedNodesNumber >= bestGlobalFitness.localizedNodesNumber){
-			//	if(swarm[l].fitness.time <= bestGlobalFitness.time){
-					//if(
-					//		swarm[l].fitness.rangesFrequent[2] < bestGlobalFitness.rangesFrequent[1]
-					//		|| 
-					//		swarm[l].fitness.rangesFrequent[2] < bestGlobalFitness.rangesFrequent[0]
-					//		|| 
-					//		swarm[l].fitness.rangesFrequent[1] < bestGlobalFitness.rangesFrequent[0]
-							
-					//	){
+				bestGlobalFitness = swarm[l].fitness;		            	
+		        bestGlobalPositions = swarm[l].positionsMatrix;
+			}
 						
-						bestGlobalFitness = swarm[l].fitness;		            	
-		            	bestGlobalPositions = swarm[l].positionsMatrix;
-					//}
-				}
-			//}
-			
 			//initialize average fitness
 			double[] particleFitness = new double[numberOfIterations];
 			particlesFitness.add(particleFitness);
@@ -150,10 +138,7 @@ public class PSOClass {
         	
         	for (int l = 0; l < swarm.length; ++l){
         		
-        		//calculate InertiaValue
-        		//double w = InertiaValue(l,iter, averageFitness);
-            	
-            	ArrayList<double[]> newVelocitiesMatrix = new ArrayList<double[]>();
+        		ArrayList<double[]> newVelocitiesMatrix = new ArrayList<double[]>();
             	ArrayList<int[]> newPositionsMatrix = new ArrayList<int[]>();
             	FloodResult newFitness;
         		
@@ -161,8 +146,6 @@ public class PSOClass {
         		
         		// calculate InertiaValue
         		double w = inertiaWeight.InertiaValue(currParticle, l, iter, particlesFitness.get(l), numberOfIterations);
-        		
-        		//double w = 0.1;
         		
         		for(int i = 0; i < currParticle.velocitiesMatrix.size() ; i++){
         			double[] vmVelocities = currParticle.velocitiesMatrix.get(i);
@@ -195,15 +178,6 @@ public class PSOClass {
         		}
         		
         		currParticle.velocitiesMatrix = newVelocitiesMatrix;
-        		
-        		/*
-        		for(int i = 0 ; i < newVelocitiesMatrix.size() ; i ++){
-        			for(int j = 0 ; j < newVelocitiesMatrix.get(i).length ; j++){
-        				System.out.print(newVelocitiesMatrix.get(i)[j] + "\t");
-        			}
-        			System.out.println();
-        		}
-        		*/
         		
         		//----->>>>> Done with velocities -----------------------------------------------------------------------------
         		
@@ -256,44 +230,14 @@ public class PSOClass {
         		newFitness = ObjectiveFunction(newPositionsMatrix, nodesList);
         		currParticle.fitness = newFitness;
         		
-        		/////////////////-------------- multi-objective here
-        		// add newFitness > .. and if bestPositionsMatrix has minimum max
-        		
-        		//if the new fitness is better than what we already found
-        		//-> set the new fitness as the best fitness so far
         		if(newFitness.localizedNodesNumber >= currParticle.bestFitness.localizedNodesNumber){
-        			//if(newFitness.time <= bestGlobalFitness.time){		
-        			//	if(
-    				//			newFitness.rangesFrequent[2] < currParticle.bestFitness.rangesFrequent[1]
-    				//			|| 
-    				//			newFitness.rangesFrequent[2] < currParticle.bestFitness.rangesFrequent[0]
-    				//			|| 
-    				//			newFitness.rangesFrequent[1] < currParticle.bestFitness.rangesFrequent[0]
-    							
-    				//	){
-        					currParticle.bestPositionsMatrix = newPositionsMatrix;
-    	                    currParticle.bestFitness = newFitness;
-        			//	}
-        			//}
+        			currParticle.bestPositionsMatrix = newPositionsMatrix;
+    	            currParticle.bestFitness = newFitness;
     			}
         		
-        		//if the new fitness is better than all solution found by all particles
-        		//-> set the new fitness as the global fitness
         		if(newFitness.localizedNodesNumber >= bestGlobalFitness.localizedNodesNumber){
-    			//	if(newFitness.time <= bestGlobalFitness.time){
-    				//	if(
-    				//			newFitness.rangesFrequent[2] < bestGlobalFitness.rangesFrequent[1]
-    				//			|| 
-    				//			newFitness.rangesFrequent[2] < bestGlobalFitness.rangesFrequent[0]
-    				//			|| 
-    				//			newFitness.rangesFrequent[1] < bestGlobalFitness.rangesFrequent[0]
-    							
-    				//	){
-    						
-    						bestGlobalPositions = newPositionsMatrix;
-    	                    bestGlobalFitness = newFitness;
-    					//}
-    			//	}
+        			bestGlobalPositions = newPositionsMatrix;
+    	            bestGlobalFitness = newFitness;
     			}
         		
         		// 8 insert new fitness in the fitness list
@@ -301,12 +245,6 @@ public class PSOClass {
 				particleFitness[iter] = currParticle.fitness.localizedNodesNumber;
 				particlesFitness.set(l, particleFitness);
         	}
-        	
-        	//System.out.println(iter);
-        	
-        	if(iter%50 == 0){
-				System.out.print("\t"+iter);
-			}
         }
         
         printFitnessValues(bestGlobalFitness);
@@ -322,8 +260,6 @@ public class PSOClass {
 				bestGlobalFitness.energyConsumption + TAB +
 				bestGlobalFitness.localizedNodesNumber;
 		
-		
-		
 		try {
 		    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("SimulationOutput" + File.separator + "out.txt", true)));
 		    out.println(res);
@@ -331,96 +267,6 @@ public class PSOClass {
 		} catch (IOException e) {}
 	}
 	
-	
-	
-	/**
-	 * will calculate the RIW according to 
-	 * (A new particle swarm optimization algorithm with random inertia weight and evolution strategy: paper)
-	 * 
-	 * @param particleNumber: The particle's number; one of the possible solutions
-	 * @param iterationNumber: The move number when searching the space
-	 * @param averageFitnesses: The average of all fitness found so far during the first to current iteration number
-	 * 
-	 * @return double value of the inertia weight
-	 */	
-	
-	/*
-	
-	private double InertiaValue(int particleNumber, int iterationNumber, ArrayList<int[]> averageFitness){
-		
-		int k = 5;
-		double w = 0.0;
-		
-		double w_max = 0.9;
-		double w_min = 0.1;
-		
-		double t_max = numberOfIterations;
-		double t = iterationNumber;
-		
-		//if t is multiple of k; use RIW method
-		if (t % k == 0 && t != 0) {
-		     
-			//annealing probability
-			double p = 0;
-					
-			double currentFitness = averageFitness.get(particleNumber)[iterationNumber];
-			double previousFitness = averageFitness.get(particleNumber)[iterationNumber - k];
-			
-			if(previousFitness <= currentFitness){
-				p = 1;
-			}
-			
-			else{
-				//annealing temperature
-				double coolingTemp_Tt = 0.0;
-				
-				Particle currParticle = swarm[particleNumber];
-				//double bestFitness = currParticle.bestFitness.time;
-				//double bestFitness = currParticle.bestFitness.localizedNodesNumber;
-				double bestFitness = currParticle.bestFitness.MaxRange;
-				
-				double ParticleFitnessAverage = 0;
-				
-				int counter = 0;
-				for(int i = 0 ; i < iterationNumber ; i++){
-					if(averageFitness.get(particleNumber)[i] > 0){
-						ParticleFitnessAverage += averageFitness.get(particleNumber)[i];
-						counter++;
-					}
-				}
-				
-				ParticleFitnessAverage = ParticleFitnessAverage/counter;
-				
-				coolingTemp_Tt = (ParticleFitnessAverage / bestFitness) - 1;
-				
-				p = Math.exp(-(previousFitness - currentFitness)/coolingTemp_Tt);
-				
-			}	
-			
-			int random = ran.nextInt(2);
-			
-			//new inertia weight
-			if(p >= random){
-				w = 1 + random/2;				
-			}
-			
-			else{
-				w = 0 + random/2;
-			}
-		}
-		
-		else{
-
-			//new inertia weight using LDIW
-			double w_fraction = ( w_max - w_min ) * ( t_max - t ) / t_max;
-			w = w_max - w_fraction;
-		}
-		
-		return w;
-	}
-
-	 */
-
 	private FloodResult ObjectiveFunction(ArrayList<int[]> positionsArrList, ArrayList<Node> nodesList) {
 		
 		double[] range = {ZigBee_powerConsumption.MinRange, ZigBee_powerConsumption.MidRange, ZigBee_powerConsumption.MaxRange}; 
@@ -440,7 +286,6 @@ public class PSOClass {
 			}
 			
 			nodesToRangeList.add(node);
-			//System.out.println("id:"+node.sender.id+"\trange:"+node.range);
 		}
 		
 		Floood flooding = new Floood();
@@ -449,10 +294,10 @@ public class PSOClass {
 	}
 	
 	/**
-	 * this function will make sure that all tasks are assigned to one of the VMs
+	 * this function will make sure that all nodes are assigned one of the output power levels
 	 * 
 	 * @param list: positions/velocity matrix
-	 * @param assignedTasksArray: the tracking array of the 0's and 1's when assiging VMs to cloudlets 
+	 * @param assignedTasksArray: the tracking array of the 0's and 1's when assigning VMs to cloudlets 
 	 * 
 	 * @return positions/velocity matrix
 	 */	

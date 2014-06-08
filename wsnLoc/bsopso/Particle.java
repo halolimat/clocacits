@@ -8,10 +8,7 @@ class Particle {
 	public ArrayList<int[]> bestPositionsMatrix; // best position found so far by this Particle
 	
 	public ArrayList<double[]> velocitiesMatrix;
-	
-	//public double fitness;
-	//public double bestFitness;
-	
+		
 	public FloodResult fitness;
 	public FloodResult bestFitness;
 
