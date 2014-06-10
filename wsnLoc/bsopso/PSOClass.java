@@ -1,3 +1,36 @@
+/*------------------------------------------------------------------------
+ * 
+ * this file is part of the BSOPSO method. 
+ *  
+ * Copyright (c) 2013-2014, Hussein S. Al-Olimat.
+ * 
+ *------------------------------------------------------------------------ 
+ *
+ * This file is part of clocacits: a set of computational intelligence 
+ * methods implemented using Java for multi-objective multi-level 
+ * optimization problems. 
+ * 
+ * clocacits contains the implementations of methods proposed in a master 
+ * thesis entitled: Optimizing Cloudlet Scheduling and Wireless Sensor 
+ * Localization using Computational Intelligence Techniques. 
+ * Thesis by: Hussein S. Al-Olimat, the University of Toledo, July 2014. 
+ * 
+ * clocacits is a free library: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * clocacits is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with clocacits.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ *------------------------------------------------------------------------
+ */
+
 package wsnLoc.bsopso;
 
 import java.io.BufferedWriter;
@@ -44,7 +77,7 @@ public class PSOClass {
 		
 		//double bestGlobalFitness = 0; // smaller values better
 		
-		FloodResult bestGlobalFitness = new FloodResult();
+		discFloodResult bestGlobalFitness = new discFloodResult();
 		bestGlobalFitness.localizedNodesNumber = 0;
 		bestGlobalFitness.time = Integer.MAX_VALUE;
 		
@@ -73,7 +106,7 @@ public class PSOClass {
 				initPositions.add(initRange);
 			}
 			
-			FloodResult fitness = ObjectiveFunction(initPositions, nodesList);
+			discFloodResult fitness = ObjectiveFunction(initPositions, nodesList);
 			
 			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//+( Velocity )+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -140,7 +173,7 @@ public class PSOClass {
         		
         		ArrayList<double[]> newVelocitiesMatrix = new ArrayList<double[]>();
             	ArrayList<int[]> newPositionsMatrix = new ArrayList<int[]>();
-            	FloodResult newFitness;
+            	discFloodResult newFitness;
         		
         		Particle currParticle = swarm[l];
         		
@@ -250,7 +283,7 @@ public class PSOClass {
         printFitnessValues(bestGlobalFitness);
 	}
 	
-	private void printFitnessValues(FloodResult bestGlobalFitness){
+	private void printFitnessValues(discFloodResult bestGlobalFitness){
 		String TAB = "\t";
 		
 		String res = bestGlobalFitness.time + TAB + 
@@ -267,7 +300,7 @@ public class PSOClass {
 		} catch (IOException e) {}
 	}
 	
-	private FloodResult ObjectiveFunction(ArrayList<int[]> positionsArrList, ArrayList<Node> nodesList) {
+	private discFloodResult ObjectiveFunction(ArrayList<int[]> positionsArrList, ArrayList<Node> nodesList) {
 		
 		double[] range = {ZigBee_powerConsumption.MinRange, ZigBee_powerConsumption.MidRange, ZigBee_powerConsumption.MaxRange}; 
 		
@@ -288,7 +321,7 @@ public class PSOClass {
 			nodesToRangeList.add(node);
 		}
 		
-		Floood flooding = new Floood();
+		discPowerLevelsFlood flooding = new discPowerLevelsFlood();
 		
 		return flooding.Start(nodesToRangeList);
 	}

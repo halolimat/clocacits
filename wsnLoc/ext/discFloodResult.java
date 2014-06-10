@@ -1,11 +1,8 @@
 /*------------------------------------------------------------------------
  * 
- * This file is based on CrowdingDistanceComparator.java file distributed 
- * with jMetal library licensed under GPL. 
+ * this file is part of the discrete PSO methods. 
  *  
- * Copyright (c) 2011, Antonio J. Nebro, Juan J. Durillo
- * 
- * Edited by: Hussein S. Al-Olimat, June 2013
+ * Copyright (c) 2013-2014, Hussein S. Al-Olimat.
  * 
  *------------------------------------------------------------------------ 
  *
@@ -34,30 +31,13 @@
  *------------------------------------------------------------------------
  */
 
-package wsnLoc.cmopso;
+package wsnLoc.ext;
 
-import java.util.Comparator;
-
-@SuppressWarnings("rawtypes")
-public class CrowdingDistanceComparator implements Comparator {
-	
-	public int compare(Object o1, Object o2) {
-		
-		if (o1 == null)
-			return 1;
-		
-		else if (o2 == null)
-			return -1;
-
-		double distance1 = ((Particle) o1).crowdingDistance;
-		double distance2 = ((Particle) o2).crowdingDistance;
-
-		if (distance1 > distance2)
-			return -1;
-		
-		if (distance1 < distance2)
-			return 1;
-		
-		return 0;
-	}
+public class discFloodResult {
+	public int localizedNodesNumber;
+	public int time;
+	public int minRange;
+	public int midRange;
+	public int MaxRange;
+	public double energyConsumption;
 }

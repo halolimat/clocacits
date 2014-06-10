@@ -1,14 +1,37 @@
-/*
- * Title:        CloudSim Toolkit
- * Description:  CloudSim (Cloud Simulation) Toolkit for Modeling and Simulation of Clouds
- * Licence:      GPL - http://www.gnu.org/copyleft/gpl.html
+/*------------------------------------------------------------------------
+ * 
+ * This file is an edited version of the original WorkloadFileReader.java file
+ * distributed with CloudSim toolkit for cloud simulation licensed under GPL.
+ * 
+ * Copyright (c) 2009, The University of Melbourne, Australia
+ * 
+ * Edited by: Hussein S. Al-Olimat, March 2013
+ * 
+ *------------------------------------------------------------------------ 
  *
- * Copyright (c) 2009-2012, The University of Melbourne, Australia
+ * This file is part of clocacits: a set of computational intelligence 
+ * methods implemented using Java for multi-objective multi-level 
+ * optimization problems. 
  * 
- * Edited by: Hussein S. Al-Olimat
- * email: hussein.alolimat@msn.com 
- * University of Toledo 2013
+ * clocacits contains the implementations of methods proposed in a master 
+ * thesis entitled: Optimizing Cloudlet Scheduling and Wireless Sensor 
+ * Localization using Computational Intelligence Techniques. 
+ * Thesis by: Hussein S. Al-Olimat, the University of Toledo, July 2014. 
  * 
+ * clocacits is a free library: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * clocacits is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with clocacits.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ *------------------------------------------------------------------------
  */
 
 package cloudsim.sources;

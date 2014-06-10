@@ -1,21 +1,45 @@
-package cloudsim.sources.bsopso;
-
-/*
- * Title:        CloudSim Toolkit
+/*------------------------------------------------------------------------
  * 
- * Description:  CloudSim (Cloud Simulation) Toolkit for Modeling and Simulation
- *               of Clouds
- *               
- * License:      GPL - http://www.gnu.org/copyleft/gpl.html
+ * this file implement the BSOPSO to reschedule cloudlets to be executed
+ * on specific VMs. BSOPSO used simulated annealing to randomly update the
+ * inertia weight for better performance.
  * 
- * implemented by: Hussein S. Al-Olimat
- * email: hussein.alolimat@msn.com
+ * this file also implements the RIW method proposed by:
+ * Chong-min, L., Yue-lin, G., & Yu-hong, D. (2008). A New Particle Swarm 
+ * Optimization Algorithm with Random Inertia Weight and Evolution Strategy. 
+ * Journal of Communication and Computer, 5(11), 42–48. 
+ * Retrieved from http://goo.gl/QPtsH
  * 
- * class description: this class will implement the binary version of PSO to reschedule cloudlets
- * 					  to be executed on specific VMs. PSO used simulated annealing to randomly 
- * 					  update the inertia weight for better performance
+ * Copyright (c) 2013-2014, Hussein S. Al-Olimat.
  * 
+ *------------------------------------------------------------------------ 
+ *
+ * This file is part of clocacits: a set of computational intelligence 
+ * methods implemented using Java for multi-objective multi-level 
+ * optimization problems. 
+ * 
+ * clocacits contains the implementations of methods proposed in a master 
+ * thesis entitled: Optimizing Cloudlet Scheduling and Wireless Sensor 
+ * Localization using Computational Intelligence Techniques. 
+ * Thesis by: Hussein S. Al-Olimat, the University of Toledo, July 2014. 
+ * 
+ * clocacits is a free library: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * clocacits is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with clocacits.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ *------------------------------------------------------------------------
  */
+
+package cloudsim.sources.bsopso;
 
 import java.util.ArrayList;
 import java.util.List;

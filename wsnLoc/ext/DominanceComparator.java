@@ -1,11 +1,8 @@
 /*------------------------------------------------------------------------
  * 
- * This file is based on CrowdingDistanceComparator.java file distributed 
- * with jMetal library licensed under GPL. 
+ * this file implement a Dominance Comparator for the MOPSO. 
  *  
- * Copyright (c) 2011, Antonio J. Nebro, Juan J. Durillo
- * 
- * Edited by: Hussein S. Al-Olimat, June 2013
+ * Copyright (c) 2013-2014, Hussein S. Al-Olimat.
  * 
  *------------------------------------------------------------------------ 
  *
@@ -34,30 +31,40 @@
  *------------------------------------------------------------------------
  */
 
-package wsnLoc.cmopso;
+package wsnLoc.ext;
 
 import java.util.Comparator;
 
 @SuppressWarnings("rawtypes")
-public class CrowdingDistanceComparator implements Comparator {
+public class DominanceComparator implements Comparator{
 	
 	public int compare(Object o1, Object o2) {
 		
-		if (o1 == null)
-			return 1;
+		discFloodResult firstParticleFitness = (discFloodResult) o1;
+		discFloodResult SecondParticleFitness = (discFloodResult) o2;
 		
-		else if (o2 == null)
-			return -1;
-
-		double distance1 = ((Particle) o1).crowdingDistance;
-		double distance2 = ((Particle) o2).crowdingDistance;
-
-		if (distance1 > distance2)
-			return -1;
+		double Particle_1_obj_1_value, Particle_1_obj_2_value;
+		double Particle_2_obj_1_value, Particle_2_obj_2_value;
 		
-		if (distance1 < distance2)
-			return 1;
+		Particle_1_obj_1_value = firstParticleFitness.time;
+		Particle_1_obj_2_value = firstParticleFitness.localizedNodesNumber;
 		
-		return 0;
+		Particle_2_obj_1_value = SecondParticleFitness.time;
+		Particle_2_obj_2_value = SecondParticleFitness.localizedNodesNumber;
+		
+		double particle_1_fitness = Particle_1_obj_2_value/ Particle_1_obj_1_value;
+		double particle_2_fitness = Particle_2_obj_2_value/ Particle_2_obj_1_value;
+		
+		if (particle_1_fitness < particle_2_fitness) {
+			return 1; // solution2 dominate
+		}
+			
+		else if (particle_1_fitness > particle_2_fitness) {
+			return -1; // solution1 dominate
+		}
+			
+		else {
+			return 0; // No one dominate the other
+		}
 	}
 }
